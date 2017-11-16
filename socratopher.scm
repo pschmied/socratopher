@@ -1,29 +1,57 @@
 ;;; Socratopher
+(use bindings)
+
 (require-library phricken)
 (import (prefix phricken ph:))
 
+(require-library http-client)
+(import (prefix http-client http:))
+
+(require-library json)
+(import (prefix json json:))
+
+
+;; Socrata access functions
+
+(define (list-domains)
+  (cdr
+   (car 
+    (vector->list
+     (http:with-input-from-request
+      "https://api.us.socrata.com/api/catalog/v1/domains"
+      #f
+      json:json-read)))))
+
+
+(define (domain->sgm domain)
+  (bind-let
+   ((((d . dstring) (c . count)) domain))
+   `(i ,(string-append dstring " - (" (number->string count) " items)"))))
+
 ;; Handlers
 
-;; Site root
+;; Site root handler
 (define (handle-root req)
   (ph:send-entries
    `((i "You are home")
      (i "----------------------------------")
      (i)
-     (1 "Foo information" "/foo")))
+     (1 "Domain list" "/domains")))
   (ph:send-lastline))
 
-(define (handle-foo req)
+;; Domain list
+(define (handle-domain-list req)
   (ph:send-entries
-   `((i "This is a thing that says foo")
+   `((i "All domains")
      (i "----------------------------------")
-     (i)
-     (1 "back home" "")))
+     (i)))
+  (ph:send-entries (map domain->sgm (list-domains)))
   (ph:send-lastline))
+
 
 (define handlers
   `(,(ph:match-selector "" handle-root)
-    ,(ph:match-selector "/foo" handle-foo)))
+    ,(ph:match-selector "/domains" handle-domain-list)))
 
 
 ;; Start the server with appropriate parameters

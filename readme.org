@@ -25,13 +25,14 @@ Therefore, dependencies include:
  - [[http://wiki.call-cc.org/eggref/4/phricken][Phricken]]
  - Probably some sort of http client, like the intuitively named
    [[http://wiki.call-cc.org/eggref/4/http-client][http-client]]
+ - openssl (because if not installed, https requests will barf)
 
 Chicken Scheme is pretty easy to install. Probably homebrew or apt.
 
 Eggs are similarly easy:
 
 #+BEGIN_SRC sh
-  chicken install phricken http-client
+  chicken install phricken http-client openssl
 #+END_SRC
 
 Grokking Scheme would probably also be good. Oops.
