@@ -38,3 +38,12 @@ Grokking Scheme would probably also be good. Oops.
 
 * Compiling
 http://wiki.call-cc.org/man/4/Getting%20started#the-compiler-
+
+#+BEGIN_SRC sh
+  csc socratopher.scm
+#+END_SRC
+
+You can also run without compiling:
+#+BEGIN_SRC sh
+  csi -script socratopher.scm
+#+END_SRC
