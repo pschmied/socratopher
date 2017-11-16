@@ -1,0 +1,38 @@
+#+TITLE: A gopher open data portal for the 90s
+
+* Introduction
+Common knowledge dictates that gopher is the greatest interactive
+content delivery platform on the Internet. We reject the web. Tunnel
+through to glory. 
+
+* Dependencies
+After a +comprehensive+ +thorough+ good enough-ish review of OTHER
+existing gopher server libraries:
+
+ - [[https://www.npmjs.com/package/gopher-lib][gopher-lib]] :: A node library on NPM, because of course there's
+                 a library on NPM.
+ - [[https://github.com/unternehmen/erthworm][erthworm]] :: A (Guile) scheme library
+ - [[https://github.com/prologic/go-gopher][go-gopher]] :: Karmic symmetry demands that someone wrote a gopher
+                server in Go.
+
+I have decided to capitalize on my first mover advantage and inflict
+[[http://wiki.call-cc.org/eggref/4/phricken][Phricken]] on my co-conspirators. It's a phricken gopher server written
+in Chicken Scheme that supports IPv6. Let that sink in for a second.
+
+Therefore, dependencies include:
+
+ - [[http://www.call-cc.org/][Chicken Scheme]]
+ - [[http://wiki.call-cc.org/eggref/4/phricken][Phricken]]
+ - Probably some sort of http client, like the intuitively named
+   [[http://wiki.call-cc.org/eggref/4/http-client][http-client]]
+
+Chicken Scheme is pretty easy to install. Probably homebrew or apt.
+
+Eggs are similarly easy:
+
+#+BEGIN_SRC sh
+  chicken install phricken http-client
+#+END_SRC
+
+Grokking Scheme would probably also be good. Oops.
+
