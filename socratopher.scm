@@ -10,7 +10,7 @@
    `((i "You are home")
      (i "----------------------------------")
      (i)
-     (l "This is a link" "/foo")))
+     (1 "This is a link" "/foo")))
   (send-lastline))
 
 (define (handle-foo req)
@@ -18,8 +18,7 @@
    `((i "This is a thing that says foo")
      (i "----------------------------------")
      (i)
-     (l "back home" "")))
-  (send-lastline))
+     (1 "back home" "/home"))))
 
 (define handlers
   `(,(match-resource "" handle-root)
