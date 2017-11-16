@@ -36,3 +36,5 @@ Eggs are similarly easy:
 
 Grokking Scheme would probably also be good. Oops.
 
+* Compiling
+http://wiki.call-cc.org/man/4/Getting%20started#the-compiler-
