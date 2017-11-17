@@ -32,7 +32,7 @@ Chicken Scheme is pretty easy to install. Probably homebrew or apt.
 Eggs are similarly easy:
 
 #+BEGIN_SRC sh
-  chicken install phricken http-client openssl
+  chicken-install phricken http-client openssl bindings
 #+END_SRC
 
 Grokking Scheme would probably also be good. Oops.

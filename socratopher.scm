@@ -26,7 +26,7 @@
 (define (domain->sgm domain)
   (bind-let
    ((((d . dstring) (c . count)) domain))
-   `(i ,(string-append dstring " - (" (number->string count) " items)"))))
+   `(1 ,(string-append dstring " - (" (number->string count) " items)") ,dstring)))
 
 ;; Handlers
 
