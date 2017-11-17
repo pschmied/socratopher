@@ -28,6 +28,10 @@
    ((((d . dstring) (c . count)) domain))
    `(1 ,(string-append dstring " - (" (number->string count) " items)") ,dstring)))
 
+(define (list-datasets domainstring)
+  (http:with-input-from-request
+   "https://api.us.socrata.com/api/catalog/v1"))
+
 ;; Handlers
 
 ;; Site root handler
