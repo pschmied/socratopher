@@ -29,15 +29,41 @@
    `(1 ,(string-append dstring " - (" (number->string count) " items)") ,dstring)))
 
 (define (list-datasets domainstring)
-  (http:with-input-from-request
-   "https://api.us.socrata.com/api/catalog/v1"))
+  (cdr
+   (car
+    (vector->list
+     (http:with-input-from-request
+      (string-append "https://api.us.socrata.com/api/catalog/v1?domains=" domainstring)
+      #f
+      json:json-read)))))
+
 
 ;; Handlers
 
 ;; Site root handler
 (define (handle-root req)
   (ph:send-entries
-   `((i "You are home")
+   `(
+     (i "             -------  _      ")
+     (i "          --/        / \_    ")
+     (i "         /    ----- /    \   ")
+     (i "       -/   -/     |      \  ")
+     (i "      /    /       /      /  ")
+     (i "      |   /    -- /    /-    ")
+     (i "     /   /    /  /  /-     \ ")
+     (i "     |   |   /    -    |   | ")
+     (i "     |   |   |     |   |   | ")
+     (i "     |   |   \     /   |   | ")
+     (i "     \   \    \   /    /   / ")
+     (i "      |   \    ---    /   |  ")
+     (i "      \    \         /    /  ")
+     (i "       -\   -\     /-   /-   ")
+     (i "         \    -----    /     ")
+     (i "          --\       /--      ")
+     (i "             -------         ")
+     (i "(c)1992 Socrata Data Systems, Inc.")
+     (i)
+     (i "You are home - Open Data Network")
      (i "----------------------------------")
      (i)
      (1 "Domain list" "/domains")))
@@ -51,6 +77,12 @@
      (i)))
   (ph:send-entries (map domain->sgm (list-domains)))
   (ph:send-lastline))
+
+(define (handle-dataset-list req)
+  (ph:send-entries
+   `((i "Dataset listing")
+     (i "----------------------------------")
+     (i req))))
 
 
 (define handlers
