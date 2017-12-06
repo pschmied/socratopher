@@ -30,12 +30,12 @@
 
 (define (list-datasets domainstring)
   (cdr
-   (car
-    (vector->list
-     (http:with-input-from-request
-      (string-append "https://api.us.socrata.com/api/catalog/v1?domains=" domainstring)
-      #f
-      json:json-read)))))
+   (vector-ref
+    (http:with-input-from-request
+     (string-append "https://api.us.socrata.com/api/catalog/v1?domains=" domainstring)
+     #f
+     json:json-read)
+    0)))
 
 
 ;; Handlers
@@ -43,25 +43,29 @@
 ;; Site root handler
 (define (handle-root req)
   (ph:send-entries
-   `(
-     (i "             -------  _      ")
-     (i "          --/        / \_    ")
-     (i "         /    ----- /    \   ")
-     (i "       -/   -/     |      \  ")
-     (i "      /    /       /      /  ")
-     (i "      |   /    -- /    /-    ")
-     (i "     /   /    /  /  /-     \ ")
-     (i "     |   |   /    -    |   | ")
-     (i "     |   |   |     |   |   | ")
-     (i "     |   |   \     /   |   | ")
-     (i "     \   \    \   /    /   / ")
-     (i "      |   \    ---    /   |  ")
-     (i "      \    \         /    /  ")
-     (i "       -\   -\     /-   /-   ")
-     (i "         \    -----    /     ")
-     (i "          --\       /--      ")
-     (i "             -------         ")
-     (i "(c)1992 Socrata Data Systems, Inc.")
+   `((i "             -------  _         ")
+     (i "          --/        / \\_      ")
+     (i "         /    ----- /    \\     ")
+     (i "       -/   -/     |      \\    ")
+     (i "      /    /       /      /     ")
+     (i "      |   /    -- /    /-       ")
+     (i "     /   /    /  /  /-     \\   ")
+     (i "     |   |   /    -    |   |    ")
+     (i "     |   |   |     |   |   |    ")
+     (i "     |   |   \\     /   |   |   ")
+     (i "     \\   \\    \\   /    /   / ")
+     (i "      |   \\    ---    /   |    ")
+     (i "      \\    \\         /    /   ")
+     (i "       -\\   -\\     /-   /-    ")
+     (i "         \\    -----    /       ")
+     (i "          --\\       /--        ")
+     (i " ____       -------         _   ")
+     (i "/ ___|  ___   ___ _ __ __ _| |_ __ _       ")
+     (i "\\___ \\ / _ \\ / __| '__/ _` | __/ _` |   ")
+     (i " ___) | (_) | (__| | | (_| | || (_| |      ")
+     (i "|____/ \\___/ \\___|_|  \\__,_|\\__\\__,_| ")
+     (i "                                           ")
+     (i "   (c)1992 Socrata Data Systems, Inc.")
      (i)
      (i "You are home - Open Data Network")
      (i "----------------------------------")
