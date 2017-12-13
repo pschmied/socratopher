@@ -7,20 +7,25 @@
 (require-library http-client)
 (import (prefix http-client http:))
 
-(require-library json)
-(import (prefix json json:))
+(require-library medea)
+(import (prefix medea medea:))
 
+;; Parsing JSON arrays as lists instead of vectors
+(define array-as-list-parser
+  (cons 'array (lambda (x) x)))
+
+(medea:json-parsers
+ (cons array-as-list-parser (medea:json-parsers)))
 
 ;; Socrata access functions
 
 (define (list-domains)
   (cdr
    (car 
-    (vector->list
-     (http:with-input-from-request
-      "https://api.us.socrata.com/api/catalog/v1/domains"
-      #f
-      json:json-read)))))
+    (http:with-input-from-request
+     "https://api.us.socrata.com/api/catalog/v1/domains"
+     #f
+     medea:read-json))))
 
 
 (define (domain->sgm domain)
@@ -29,13 +34,10 @@
    `(1 ,(string-append dstring " - (" (number->string count) " items)") ,dstring)))
 
 (define (list-datasets domainstring)
-  (cdr
-   (vector-ref
-    (http:with-input-from-request
-     (string-append "https://api.us.socrata.com/api/catalog/v1?domains=" domainstring)
-     #f
-     json:json-read)
-    0)))
+  (http:with-input-from-request
+   (string-append "https://api.us.socrata.com/api/catalog/v1?domains=" domainstring)
+   #f
+   medea:read-json))
 
 
 ;; Handlers
@@ -91,7 +93,8 @@
 
 (define handlers
   `(,(ph:match-selector "" handle-root)
-    ,(ph:match-selector "/domains" handle-domain-list)))
+    ,(ph:match-selector "/domains" handle-domain-list)
+    ,(ph:match-selector ".+\\..+" handle-dataset-list)))
 
 
 ;; Start the server with appropriate parameters
