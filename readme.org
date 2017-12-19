@@ -26,13 +26,14 @@ Therefore, dependencies include:
  - Probably some sort of http client, like the intuitively named
    [[http://wiki.call-cc.org/eggref/4/http-client][http-client]]
  - openssl (because if not installed, https requests will barf)
+ - [[http://wiki.call-cc.org/eggref/4/medea][Medea]] JSON parsing library
 
 Chicken Scheme is pretty easy to install. Probably homebrew or apt.
 
 Eggs are similarly easy:
 
 #+BEGIN_SRC sh
-  chicken-install phricken http-client openssl bindings json
+  chicken-install phricken http-client openssl bindings medea
 #+END_SRC
 
 Grokking Scheme would probably also be good. Oops.
