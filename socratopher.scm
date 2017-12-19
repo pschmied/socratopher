@@ -37,7 +37,8 @@
    (assoc
     'results
     (http:with-input-from-request
-     (string-append "https://api.us.socrata.com/api/catalog/v1?domains=" domainstring)
+     (string-append "https://api.us.socrata.com/api/catalog/v1?limit=10000&domains="
+                    domainstring)
      #f
      medea:read-json))))
 
@@ -96,7 +97,8 @@
    `((i "Dataset listing")
      (i "----------------------------------")
      (i)))
-  (ph:send-entries (map dataset->sgm (list-datasets (request-selector req)))))
+  (ph:send-entries (map dataset->sgm
+                        (list-datasets (ph:request-selector req)))))
 
 
 (define handlers
