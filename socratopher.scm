@@ -21,12 +21,11 @@
 
 (define (list-domains)
   (cdr
-   (car 
+   (assoc 'results
     (http:with-input-from-request
      "https://api.us.socrata.com/api/catalog/v1/domains"
      #f
      medea:read-json))))
-
 
 (define (domain->sgm domain)
   (bind-let
@@ -34,11 +33,19 @@
    `(1 ,(string-append dstring " - (" (number->string count) " items)") ,dstring)))
 
 (define (list-datasets domainstring)
-  (http:with-input-from-request
-   (string-append "https://api.us.socrata.com/api/catalog/v1?domains=" domainstring)
-   #f
-   medea:read-json))
+  (cdr
+   (assoc
+    'results
+    (http:with-input-from-request
+     (string-append "https://api.us.socrata.com/api/catalog/v1?domains=" domainstring)
+     #f
+     medea:read-json))))
 
+(define (dataset->sgm dataset)
+  (let* ((attribs (flatten (cdr (assoc 'resource dataset))))
+         (name (alist-ref 'name attribs))
+         (id (alist-ref 'id attribs)))
+    `(1 ,(string-append id " - " name) ,id)))
 
 ;; Handlers
 
@@ -88,7 +95,8 @@
   (ph:send-entries
    `((i "Dataset listing")
      (i "----------------------------------")
-     (i req))))
+     (i)))
+  (ph:send-entries (map dataset->sgm (list-datasets (request-selector req)))))
 
 
 (define handlers
